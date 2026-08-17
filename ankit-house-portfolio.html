@@ -87,6 +87,20 @@
     white-space:nowrap;
   }
 
+  /* scroll controls — for room signs whose content overflows the frame */
+  #scroll-controls{
+    position:absolute;right:clamp(14px,3vw,26px);top:50%;transform:translateY(-50%);z-index:28;
+    display:none;flex-direction:column;gap:6px;
+  }
+  #scroll-controls.show{display:flex;}
+  .scroll-btn{
+    width:42px;height:42px;border-radius:12px;background:rgba(18,19,28,.8);backdrop-filter:blur(10px);
+    border:1px solid var(--line);font-size:1rem;font-weight:700;color:var(--ink-muted);
+    display:flex;align-items:center;justify-content:center;transition:all .15s;
+  }
+  .scroll-btn:hover{border-color:var(--sky);color:var(--sky);}
+  .scroll-btn:active{transform:scale(.94);}
+
   /* crosshair */
   #crosshair{
     position:absolute;top:50%;left:50%;width:6px;height:6px;margin:-3px 0 0 -3px;
@@ -119,71 +133,6 @@
     transition:all .15s;
   }
   .enter-btn:hover{background:var(--purple);transform:translateY(-2px);}
-
-  /* content panel */
-  #panel{
-    position:absolute;top:0;right:0;bottom:0;width:min(420px,100vw);z-index:35;
-    background:var(--surface);border-left:1px solid var(--line);
-    transform:translateX(100%);transition:transform .38s cubic-bezier(.2,.9,.25,1);
-    display:flex;flex-direction:column;
-  }
-  #panel.open{transform:translateX(0);}
-  @media (max-width:720px){
-    #panel{width:100%;top:auto;height:66vh;border-left:none;border-top:1px solid var(--line);border-radius:22px 22px 0 0;transform:translateY(100%);}
-    #panel.open{transform:translateY(0);}
-  }
-  .panel-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--line);flex-shrink:0;}
-  .panel-head .room-tag{
-    font-family:var(--font-mono);font-size:.7rem;color:var(--panel-accent,var(--sky));background:var(--panel-accent-soft,var(--sky-soft));
-    padding:5px 12px;border-radius:20px;margin-bottom:6px;display:inline-block;font-weight:700;
-  }
-  .panel-head h2{font-family:var(--font-display);font-size:1.25rem;}
-  .panel-close{
-    width:36px;height:36px;border-radius:50%;border:1px solid var(--line);flex-shrink:0;
-    display:flex;align-items:center;justify-content:center;font-size:1.1rem;color:var(--ink-muted);transition:all .15s;
-  }
-  .panel-close:hover{border-color:var(--coral);color:var(--coral);}
-  .panel-body{padding:22px;overflow-y:auto;flex:1;}
-  .panel-body p.lede{color:var(--ink-muted);font-size:.94rem;margin-bottom:18px;line-height:1.65;}
-
-  .stop{margin-bottom:20px;padding-bottom:20px;border-bottom:1px solid var(--line);}
-  .stop:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0;}
-  .stop-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap;margin-bottom:4px;}
-  .stop-head h3{font-size:1rem;font-family:var(--font-display);}
-  .stop-when{font-family:var(--font-mono);font-size:.66rem;color:var(--ink-faint);white-space:nowrap;}
-  .stop .company{font-family:var(--font-mono);font-size:.75rem;color:var(--panel-accent,var(--sky));margin-bottom:8px;}
-  .stop li{font-size:.85rem;color:var(--ink-muted);padding-left:18px;position:relative;margin-bottom:6px;line-height:1.5;}
-  .stop li::before{content:"→";position:absolute;left:0;color:var(--panel-accent,var(--sky));}
-
-  .skill-groups{display:flex;flex-direction:column;gap:16px;}
-  .skill-group .g-title{font-family:var(--font-mono);font-size:.7rem;color:var(--ink-faint);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px;}
-  .chip-row{display:flex;flex-wrap:wrap;gap:7px;}
-  .chip-row span{font-family:var(--font-mono);font-size:.73rem;color:var(--ink);background:var(--surface-2);border:1px solid var(--line);padding:6px 11px;border-radius:100px;}
-
-  .proj-card{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:16px;margin-bottom:12px;}
-  .proj-card:last-child{margin-bottom:0;}
-  .proj-card h3{font-size:.94rem;margin-bottom:4px;}
-  .proj-card .tagline{font-size:.81rem;color:var(--ink-muted);margin-bottom:10px;}
-  .proj-tags{display:flex;flex-wrap:wrap;gap:6px;}
-  .proj-tags span{font-family:var(--font-mono);font-size:.65rem;color:var(--ink-muted);border:1px solid var(--line);padding:3px 9px;border-radius:100px;}
-
-  .cert-item{display:flex;gap:12px;align-items:flex-start;background:var(--surface-2);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:10px;}
-  .cert-item:last-child{margin-bottom:0;}
-  .cert-item .cicon{width:36px;height:36px;border-radius:10px;flex-shrink:0;display:flex;align-items:center;justify-content:center;background:var(--panel-accent-soft,var(--sky-soft));color:var(--panel-accent,var(--sky));font-size:1rem;}
-  .cert-item h3{font-size:.9rem;margin-bottom:2px;}
-  .cert-item .issuer{font-family:var(--font-mono);font-size:.71rem;color:var(--ink-muted);}
-
-  .contact-links{display:flex;flex-direction:column;gap:9px;}
-  .contact-links a{display:flex;align-items:center;gap:12px;padding:13px 15px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;font-weight:700;font-size:.84rem;color:var(--ink);transition:all .15s;word-break:break-word;}
-  .contact-links a:hover{border-color:var(--panel-accent,var(--sky));}
-  .contact-links .ic{width:30px;height:30px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-  .ic-mail{background:var(--coral-soft);color:var(--coral);} .ic-phone{background:var(--green-soft);color:var(--green);}
-  .ic-linkedin{background:var(--sky-soft);color:var(--sky);} .ic-github{background:var(--surface);color:var(--ink);} .ic-leetcode{background:var(--yellow-soft);color:var(--yellow);}
-
-  .about-hero{display:flex;flex-direction:column;gap:14px;}
-  .about-hero .stats{display:flex;gap:18px;flex-wrap:wrap;}
-  .about-hero .stat .num{font-family:var(--font-display);font-size:1.4rem;color:var(--ink);}
-  .about-hero .stat .lab{font-family:var(--font-mono);font-size:.65rem;color:var(--ink-faint);text-transform:uppercase;}
 
   #loading{position:absolute;inset:0;z-index:50;display:flex;align-items:center;justify-content:center;background:var(--bg);flex-direction:column;gap:14px;}
   #loading.hide{display:none;}
@@ -218,6 +167,10 @@
 <div id="scene-wrap"><canvas id="scene"></canvas></div>
 <div id="crosshair"></div>
 <div id="arrows"></div>
+<div id="scroll-controls">
+  <button id="scrollUp" class="scroll-btn" aria-label="Scroll up">▲</button>
+  <button id="scrollDown" class="scroll-btn" aria-label="Scroll down">▼</button>
+</div>
 <div id="look-hint">🖱️ Drag to look · WASD to walk</div>
 
 <header>
@@ -246,14 +199,6 @@
   </div>
 </div>
 
-<aside id="panel">
-  <div class="panel-head">
-    <div><span class="room-tag" id="panelTag">Room</span><h2 id="panelTitle">Title</h2></div>
-    <button class="panel-close" id="panelClose" aria-label="Close">✕</button>
-  </div>
-  <div class="panel-body" id="panelBody"></div>
-</aside>
-
 <script>
 (function(){
   "use strict";
@@ -263,12 +208,12 @@
      ROOM DATA
   ========================================================== */
   var ROOMS = {
-    drawing:{label:'Drawing Room', icon:'🛋️', tag:'ABOUT', title:'Welcome in', cx:-8, cz:-4, accent:'var(--sky)', accentSoft:'var(--sky-soft)'},
-    dining: {label:'Dining Room',  icon:'🍽️', tag:'EXPERIENCE', title:'Where I\u2019ve worked', cx:0, cz:-4, accent:'var(--coral)', accentSoft:'var(--coral-soft)'},
-    bedroom:{label:'Bedroom',      icon:'🛏️', tag:'SKILLS', title:'What I build with', cx:8, cz:-4, accent:'var(--purple)', accentSoft:'var(--purple-soft)'},
-    porch:  {label:'Porch',        icon:'🚪', tag:'CONTACT', title:'Come say hi', cx:-8, cz:4, accent:'var(--ink-muted)', accentSoft:'rgba(154,156,180,.16)'},
-    study:  {label:'Study',        icon:'📁', tag:'PROJECTS', title:'Things I\u2019ve shipped', cx:0, cz:4, accent:'var(--green)', accentSoft:'var(--green-soft)'},
-    trophy: {label:'Trophy Room',  icon:'🏆', tag:'CERTIFICATIONS', title:'Keep learning', cx:8, cz:4, accent:'var(--yellow)', accentSoft:'var(--yellow-soft)'}
+    drawing:{label:'Drawing Room', icon:'🛋️', tag:'ABOUT', title:'Welcome in', cx:-8, cz:-4, ax:-7, ay:1.35, az:-1.6, accent:'var(--sky)', accentSoft:'var(--sky-soft)'},
+    dining: {label:'Dining Room',  icon:'🍽️', tag:'EXPERIENCE', title:'Where I\u2019ve worked', cx:0, cz:-4, ax:0, ay:1.55, az:-4, accent:'var(--coral)', accentSoft:'var(--coral-soft)'},
+    bedroom:{label:'Bedroom',      icon:'🛏️', tag:'SKILLS', title:'What I build with', cx:8, cz:-4, ax:9.2, ay:1.9, az:-5.4, accent:'var(--purple)', accentSoft:'var(--purple-soft)'},
+    porch:  {label:'Porch',        icon:'🚪', tag:'CONTACT', title:'Come say hi', cx:-8, cz:4, ax:-6.6, ay:1.75, az:7.4, accent:'var(--ink-muted)', accentSoft:'rgba(154,156,180,.16)'},
+    study:  {label:'Study',        icon:'📁', tag:'PROJECTS', title:'Things I\u2019ve shipped', cx:0, cz:4, ax:-0.4, ay:1.55, az:3.2, accent:'var(--green)', accentSoft:'var(--green-soft)'},
+    trophy: {label:'Trophy Room',  icon:'🏆', tag:'CERTIFICATIONS', title:'Keep learning', cx:8, cz:4, ax:8, ay:2.15, az:5.6, accent:'var(--yellow)', accentSoft:'var(--yellow-soft)'}
   };
   var ROOM_ORDER = ['drawing','dining','bedroom','study','trophy','porch'];
 
@@ -454,8 +399,8 @@
   /* =========================================================
      FIRST-PERSON PLAYER + COLLISION
   ========================================================== */
-  var player = {x:-8, z:6.6}; // start on the porch, facing into the house
-  var yaw = Math.PI, pitch = -0.05;
+  var player = {x:-8, z:-5}; // start in the Drawing Room, facing the About sign
+  var yaw = 0, pitch = -0.05;
   var PLAYER_R = 0.32;
 
   function collides(x,z){
@@ -607,58 +552,219 @@
 
   var chipSw = document.getElementById('chipSw'), chipText = document.getElementById('chipText');
 
-  var panel = document.getElementById('panel');
-  var panelTag = document.getElementById('panelTag'), panelTitle = document.getElementById('panelTitle'), panelBody = document.getElementById('panelBody');
-
-  function renderPanelContent(key){
-    if(key==='drawing'){
-      panelBody.innerHTML = '<div class="about-hero"><p class="lede">Hi, I\'m Ankit — a Software Developer with 4 years building full-stack features, REST API integrations, and WordPress/WooCommerce platforms that hold up under real traffic. Walk through the other rooms to see the work itself.</p>'+
-        '<div class="stats"><div class="stat"><div class="num">4+</div><div class="lab">Years shipping</div></div><div class="stat"><div class="num">6+</div><div class="lab">Plugins &amp; platforms</div></div><div class="stat"><div class="num">3</div><div class="lab">Certifications</div></div></div></div>';
-      return;
-    }
-    if(key==='dining'){
-      panelBody.innerHTML = '<p class="lede">Two stops, one habit: take something fragile or manual, and make it dependable.</p>' +
-        EXPERIENCE.map(function(e){ return '<div class="stop"><div class="stop-head"><h3>'+e.role+'</h3><span class="stop-when">'+e.when+'</span></div><div class="company">'+e.company+'</div><ul>'+e.bullets.map(function(b){return '<li>'+b+'</li>';}).join('')+'</ul></div>'; }).join('');
-      return;
-    }
-    if(key==='bedroom'){
-      panelBody.innerHTML = '<p class="lede">Tools and languages I reach for daily, grouped the way I actually use them.</p><div class="skill-groups">' +
-        SKILLS.map(function(g){ return '<div class="skill-group"><div class="g-title">'+g.group+'</div><div class="chip-row">'+g.items.map(function(i){return '<span>'+i+'</span>';}).join('')+'</div></div>'; }).join('')+'</div>';
-      return;
-    }
-    if(key==='study'){
-      panelBody.innerHTML = '<p class="lede">A mix of SaaS platform work and WordPress/WooCommerce plugins built for real customers.</p>' +
-        PROJECTS.map(function(p){ return '<div class="proj-card"><h3>'+p.name+'</h3><div class="tagline">'+p.tagline+'</div><div class="proj-tags">'+p.tags.map(function(t){return '<span>'+t+'</span>';}).join('')+'</div></div>'; }).join('');
-      return;
-    }
-    if(key==='trophy'){
-      panelBody.innerHTML = '<p class="lede">Courses I\'ve completed to stay sharp on the stack I use every day.</p>' +
-        CERTS.map(function(c){ return '<div class="cert-item"><div class="cicon">'+c.icon+'</div><div><h3>'+c.name+'</h3><div class="issuer">'+c.issuer+'</div></div></div>'; }).join('');
-      return;
-    }
-    if(key==='porch'){
-      panelBody.innerHTML = '<p class="lede">Open to new roles and freelance work — drop a line, I read everything.</p><div class="contact-links">'+
-        '<a href="mailto:ankitnair8871@gmail.com"><span class="ic ic-mail">✉️</span> ankitnair8871@gmail.com</a>'+
-        '<a href="tel:+919131130573"><span class="ic ic-phone">📞</span> +91 91311 30573</a>'+
-        '<a href="https://www.linkedin.com/in/ankit-nair-a57414187/" target="_blank" rel="noopener noreferrer"><span class="ic ic-linkedin">💼</span> linkedin.com/in/ankit-nair-a57414187</a>'+
-        '<a href="https://github.com/ankit8871261605" target="_blank" rel="noopener noreferrer"><span class="ic ic-github">🐙</span> github.com/ankit8871261605</a>'+
-        '<a href="https://leetcode.com/u/ankitnair8871/" target="_blank" rel="noopener noreferrer"><span class="ic ic-leetcode">🧠</span> leetcode.com/u/ankitnair8871</a>'+
-        '</div>';
-      return;
-    }
+  /* =========================================================
+     ROOM SIGNS — the data is drawn as textures on real geometry
+     mounted on each room's wall, not an HTML overlay.
+  ========================================================== */
+  function roundRect(ctx,x,y,w,h,r){
+    ctx.beginPath();
+    ctx.moveTo(x+r,y); ctx.arcTo(x+w,y,x+w,y+h,r); ctx.arcTo(x+w,y+h,x,y+h,r);
+    ctx.arcTo(x,y+h,x,y,r); ctx.arcTo(x,y,x+w,y,r); ctx.closePath();
+  }
+  function wrapLines(ctx, text, maxWidth){
+    var words = text.split(' '), lines = [], cur = '';
+    words.forEach(function(w){
+      var test = cur ? cur+' '+w : w;
+      if(ctx.measureText(test).width > maxWidth && cur){ lines.push(cur); cur = w; } else { cur = test; }
+    });
+    if(cur) lines.push(cur);
+    return lines;
+  }
+  function hexToRgba(hex, alpha){
+    var h = hex.replace('#','');
+    var r = parseInt(h.substring(0,2),16), g = parseInt(h.substring(2,4),16), b = parseInt(h.substring(4,6),16);
+    return 'rgba('+r+','+g+','+b+','+alpha+')';
+  }
+  function drawBadges(ctx, items, x, y, maxWidth){
+    var cx=x, cy=y, lineH=38, gap=10;
+    ctx.font = '600 22px "Space Mono", monospace';
+    items.forEach(function(txt){
+      var tw = ctx.measureText(txt).width + 28;
+      if(cx+tw > x+maxWidth && cx>x){ cx=x; cy+=lineH+gap; }
+      ctx.fillStyle = 'rgba(255,255,255,0.07)';
+      roundRect(ctx,cx,cy,tw,lineH,12); ctx.fill();
+      ctx.strokeStyle='rgba(255,255,255,0.16)'; ctx.lineWidth=1.5; roundRect(ctx,cx,cy,tw,lineH,12); ctx.stroke();
+      ctx.fillStyle='#e7e7f3'; ctx.textBaseline='middle'; ctx.font='600 22px "Space Mono", monospace';
+      ctx.fillText(txt, cx+14, cy+lineH/2+1);
+      cx += tw+gap;
+    });
+    ctx.textBaseline = 'alphabetic';
+    return cy+lineH;
+  }
+  function drawBase(ctx, W, H, accentHex, bgHex, tag, title){
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = bgHex; roundRect(ctx,0,0,W,H,28); ctx.fill();
+    ctx.strokeStyle = accentHex; ctx.lineWidth = 6; roundRect(ctx,4,4,W-8,H-8,26); ctx.stroke();
+    var pad = 46;
+    ctx.font = '700 24px "Space Mono", monospace';
+    var tagW = ctx.measureText(tag).width + 32;
+    ctx.fillStyle = hexToRgba(accentHex, 0.16);
+    roundRect(ctx,pad,pad,tagW,42,21); ctx.fill();
+    ctx.fillStyle = accentHex; ctx.textBaseline='middle'; ctx.font = '700 24px "Space Mono", monospace';
+    ctx.fillText(tag, pad+16, pad+22);
+    ctx.font = '700 46px "Baloo 2", sans-serif';
+    ctx.fillStyle = '#e7e7f3'; ctx.textBaseline='alphabetic';
+    ctx.fillText(title, pad, pad+112);
+    return pad+150;
+  }
+  function makeSign(W, H, drawFn){
+    var SCALE = 2;
+    var cnv = document.createElement('canvas');
+    cnv.width = W*SCALE; cnv.height = H*SCALE;
+    var ctx = cnv.getContext('2d');
+    ctx.scale(SCALE, SCALE);
+    ctx.textBaseline = 'alphabetic';
+    drawFn(ctx, W, H);
+    var tex = new THREE.CanvasTexture(cnv);
+    tex.anisotropy = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 1;
+    tex.needsUpdate = true;
+    return tex;
+  }
+  function mountSign(tex, w, h, x, y, z, rotY){
+    var geo = new THREE.PlaneGeometry(w,h);
+    var mat = new THREE.MeshBasicMaterial({map:tex, transparent:true});
+    var m = new THREE.Mesh(geo, mat);
+    m.position.set(x,y,z);
+    m.rotation.y = rotY;
+    houseGroup.add(m);
+    return m;
   }
 
-  function openPanelFor(key){
-    var r = ROOMS[key];
-    panel.style.setProperty('--panel-accent', r.accent);
-    panel.style.setProperty('--panel-accent-soft', r.accentSoft);
-    panelTag.innerHTML = r.icon+' '+r.tag;
-    panelTitle.textContent = r.title;
-    renderPanelContent(key);
-    panel.classList.add('open');
+  function measureContent(W, drawFn){
+    var cnv = document.createElement('canvas'); cnv.width=W; cnv.height=4000;
+    var ctx = cnv.getContext('2d'); ctx.textBaseline='alphabetic';
+    var bottom = drawFn(ctx, W, 4000);
+    return bottom || 4000;
   }
-  function closePanel(){ panel.classList.remove('open'); }
-  document.getElementById('panelClose').addEventListener('click', closePanel);
+  var signs = {}; // key -> {tex, repeatY, fullH, viewH, offsetY}
+  function buildRoomTexture(key, viewW, viewH, drawFn){
+    var contentBottom = measureContent(viewW, drawFn);
+    var fullH = Math.max(viewH, Math.ceil(contentBottom)+40);
+    var tex = makeSign(viewW, fullH, drawFn);
+    var repeatY = viewH/fullH;
+    tex.repeat.set(1, repeatY);
+    tex.offset.set(0, 1-repeatY);
+    signs[key] = {tex:tex, repeatY:repeatY, fullH:fullH, viewH:viewH, offsetY:1-repeatY};
+    return tex;
+  }
+  function scrollRoom(key, deltaPx){
+    var s = signs[key];
+    if(!s || s.repeatY >= 1) return;
+    var deltaUV = deltaPx / s.fullH;
+    s.offsetY = Math.max(0, Math.min(1-s.repeatY, s.offsetY - deltaUV));
+    s.tex.offset.y = s.offsetY;
+  }
+
+  function buildSigns(){
+    var BG = '#1c1e2b';
+
+    // Drawing Room — About
+    mountSign(buildRoomTexture('drawing', 760,540,function(ctx,W,H){
+      var y = drawBase(ctx,W,H,'#7aa2f7',BG,'ABOUT','Welcome in');
+      ctx.font='400 24px "Plus Jakarta Sans", sans-serif'; ctx.fillStyle='#9a9cb4';
+      var lines = wrapLines(ctx,'Hi, I\'m Ankit — a Software Developer with 4 years building full-stack features, REST APIs, and WordPress/WooCommerce platforms that hold up under real traffic.', W-92);
+      lines.forEach(function(l,i){ ctx.fillText(l, 46, y+i*34); });
+      y += lines.length*34+36;
+      var stats=[['4+','Years shipping'],['6+','Plugins & platforms'],['3','Certifications']];
+      var sx=46;
+      stats.forEach(function(s){
+        ctx.font='700 40px "Baloo 2", sans-serif'; ctx.fillStyle='#e7e7f3'; ctx.fillText(s[0], sx, y);
+        ctx.font='600 16px "Space Mono", monospace'; ctx.fillStyle='#5f6180'; ctx.fillText(s[1].toUpperCase(), sx, y+28);
+        sx += 210;
+      });
+      return y+50;
+    }), 3.4, 2.4, -8, 1.55, -7.86, 0);
+
+    // Dining Room — Experience
+    mountSign(buildRoomTexture('dining', 760,540,function(ctx,W,H){
+      var y = drawBase(ctx,W,H,'#f7768e',BG,'EXPERIENCE','Where I\u2019ve worked');
+      EXPERIENCE.forEach(function(e){
+        ctx.font='700 28px "Baloo 2", sans-serif'; ctx.fillStyle='#e7e7f3'; ctx.fillText(e.role, 46, y);
+        ctx.font='600 18px "Space Mono", monospace'; ctx.fillStyle='#f7768e'; ctx.fillText(e.company, 46, y+30);
+        ctx.font='400 16px "Space Mono", monospace'; ctx.fillStyle='#5f6180'; ctx.fillText(e.when, 46, y+54);
+        y += 78;
+        e.bullets.forEach(function(b){
+          ctx.font='400 21px "Plus Jakarta Sans", sans-serif'; ctx.fillStyle='#9a9cb4';
+          var lines = wrapLines(ctx, '→ '+b, W-104);
+          lines.forEach(function(l,i){ ctx.fillText(l, 58, y+i*29); });
+          y += lines.length*29 + 8;
+        });
+        y += 26;
+      });
+      return y;
+    }), 3.4, 2.4, 0, 1.55, -7.86, 0);
+
+    // Bedroom — Skills
+    mountSign(buildRoomTexture('bedroom', 760,540,function(ctx,W,H){
+      var y = drawBase(ctx,W,H,'#bb9af7',BG,'SKILLS','What I build with');
+      SKILLS.forEach(function(g){
+        ctx.font='600 18px "Space Mono", monospace'; ctx.fillStyle='#5f6180';
+        ctx.fillText(g.group.toUpperCase(), 46, y);
+        y += 14;
+        y = drawBadges(ctx, g.items, 46, y+16, W-92) + 30;
+      });
+      return y;
+    }), 3.4, 2.4, 9.3, 1.55, -7.86, 0);
+
+    // Study — Projects
+    mountSign(buildRoomTexture('study', 760,540,function(ctx,W,H){
+      var y = drawBase(ctx,W,H,'#9ece6a',BG,'PROJECTS','Things I\u2019ve shipped');
+      PROJECTS.forEach(function(p){
+        ctx.font='700 26px "Baloo 2", sans-serif'; ctx.fillStyle='#e7e7f3'; ctx.fillText(p.name, 46, y);
+        y += 32;
+        ctx.font='400 20px "Plus Jakarta Sans", sans-serif'; ctx.fillStyle='#9a9cb4';
+        var lines = wrapLines(ctx, p.tagline, W-92);
+        lines.forEach(function(l,i){ ctx.fillText(l, 46, y+i*27); });
+        y += lines.length*27 + 14;
+        y = drawBadges(ctx, p.tags, 46, y, W-92) + 34;
+      });
+      return y;
+    }), 3.4, 2.4, 0.4, 1.55, 7.86, Math.PI);
+
+    // Trophy Room — Certifications
+    mountSign(buildRoomTexture('trophy', 760,540,function(ctx,W,H){
+      var y = drawBase(ctx,W,H,'#e0af68',BG,'CERTIFICATIONS','Keep learning');
+      CERTS.forEach(function(c){
+        ctx.font='700 26px "Baloo 2", sans-serif'; ctx.fillStyle='#e7e7f3';
+        ctx.fillText(c.name, 46, y);
+        ctx.font='600 17px "Space Mono", monospace'; ctx.fillStyle='#e0af68';
+        ctx.fillText(c.issuer, 46, y+30);
+        y += 76;
+      });
+      return y;
+    }), 3.4, 2.4, 11.86, 1.55, 4, -Math.PI/2);
+
+    // Porch — Contact
+    mountSign(buildRoomTexture('porch', 760,540,function(ctx,W,H){
+      var y = drawBase(ctx,W,H,'#9a9cb4',BG,'CONTACT','Come say hi');
+      var lines = [
+        ['✉', 'ankitnair8871@gmail.com'],
+        ['☎', '+91 91311 30573'],
+        ['in', 'linkedin.com/in/ankit-nair-a57414187'],
+        ['⌥', 'github.com/ankit8871261605'],
+        ['</>', 'leetcode.com/u/ankitnair8871']
+      ];
+      lines.forEach(function(l){
+        ctx.font='700 20px "Space Mono", monospace'; ctx.fillStyle='#9a9cb4'; ctx.fillText(l[0], 46, y);
+        ctx.font='500 22px "Plus Jakarta Sans", sans-serif'; ctx.fillStyle='#e7e7f3'; ctx.fillText(l[1], 92, y);
+        y += 46;
+      });
+      return y;
+    }), 3.4, 2.4, -11.86, 1.55, 4, Math.PI/2);
+
+    refreshScrollControls();
+  }
+  function loadSignFonts(){
+    var specs = [
+      '400 24px "Plus Jakarta Sans"', '500 24px "Plus Jakarta Sans"',
+      '700 46px "Baloo 2"', '700 28px "Baloo 2"', '700 26px "Baloo 2"',
+      '400 24px "Space Mono"', '600 22px "Space Mono"', '700 24px "Space Mono"', '600 18px "Space Mono"', '600 17px "Space Mono"', '600 20px "Space Mono"', '700 20px "Space Mono"'
+    ];
+    if(!document.fonts || !document.fonts.load){ return Promise.resolve(); }
+    return Promise.all(specs.map(function(s){ return document.fonts.load(s).catch(function(){}); }));
+  }
+  var signsFontsReady = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  signsFontsReady.then(loadSignFonts).then(buildSigns).catch(buildSigns);
 
   /* =========================================================
      DOORWAY ARROWS — travel to the next room, no menu needed
@@ -697,24 +803,56 @@
     });
   }
 
+  var scrollControlsEl = document.getElementById('scroll-controls');
+  function refreshScrollControls(){
+    var s = currentRoom && signs[currentRoom];
+    scrollControlsEl.classList.toggle('show', !!(s && s.repeatY < 1));
+  }
+
   function onRoomChanged(key){
     currentRoom = key;
     if(key){
       var r = ROOMS[key];
       chipSw.style.background = r.accent;
       chipText.textContent = r.icon+' '+r.label;
-      openPanelFor(key);
     } else {
       chipSw.style.background = 'var(--ink-faint)';
       chipText.textContent = 'Hallway';
-      closePanel();
     }
     buildArrowsForRoom(key);
+    refreshScrollControls();
   }
 
   document.getElementById('enterBtn').addEventListener('click', function(){
     document.getElementById('welcome').classList.add('hide');
     onRoomChanged(roomAt(player.x, player.z));
+  });
+
+  // wheel scrolls the current room's sign instead of doing nothing
+  canvas.addEventListener('wheel', function(e){
+    if(currentRoom && signs[currentRoom] && signs[currentRoom].repeatY < 1){
+      e.preventDefault();
+      scrollRoom(currentRoom, e.deltaY*0.6);
+    }
+  }, {passive:false});
+
+  // press-and-hold scroll buttons
+  function holdScroll(dir){
+    var timer = null;
+    function tick(){ if(currentRoom) scrollRoom(currentRoom, dir*14); }
+    function start(e){ e.preventDefault(); tick(); timer = setInterval(tick, 45); }
+    function stop(){ clearInterval(timer); }
+    return {start:start, stop:stop};
+  }
+  var upCtl = holdScroll(-1), downCtl = holdScroll(1);
+  var upBtn = document.getElementById('scrollUp'), downBtn = document.getElementById('scrollDown');
+  ['pointerdown'].forEach(function(ev){
+    upBtn.addEventListener(ev, upCtl.start);
+    downBtn.addEventListener(ev, downCtl.start);
+  });
+  ['pointerup','pointerleave','pointercancel'].forEach(function(ev){
+    upBtn.addEventListener(ev, upCtl.stop);
+    downBtn.addEventListener(ev, downCtl.stop);
   });
 
   /* =========================================================
